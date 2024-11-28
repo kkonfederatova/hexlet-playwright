@@ -1,6 +1,19 @@
 // @ts-check
 const { test, expect } = require('@playwright/test');
 
+test('test', async ({ page }) => {
+  await page.goto('https://demo.playwright.dev/todomvc/');
+
+  const input = page.getByPlaceholder('What needs to be done?');
+
+  const taskName = "Помыть посуду";
+  await input.fill(taskName);
+  await input.press('Enter');
+
+  const item = page.getByTestId('todo-title').filter({ hasText: taskName });
+  await expect(item).toBeVisible();
+})
+
 test('has title', async ({ page }) => {
   await page.goto('https://playwright.dev/');
 
